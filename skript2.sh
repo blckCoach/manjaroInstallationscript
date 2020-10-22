@@ -12,21 +12,23 @@ do
 	PS3="Choose a town: "
 	select zoneTown in $(ls /usr/share/zoneinfo/$zone | more)
 	do
-		ln -s /usr/share/zoneinfo/$zone/$zoneTown /etc/localtime
+		ln -sf /usr/share/zoneinfo/$zone/$zoneTown /etc/localtime
 		break
 	done
 	break
 done
 
 hwclock --systohc  --utc
+systemctl enable systemd-timesyncd
 
-echo "de_DE.utf8" >> /etc/locale.gen
+echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
 echo "LANG=de_DE.utf8" > /etc/locale.conf
 
-echo "kirito" >vim /etc/hostname
+echo "majaro" >vim /etc/hostname
 
+mkinitcpio -P linux56
 rm /etc/mkinitcpio.conf
 cp mkinitcpio.conf /etc/
 mkinitcpio -P
@@ -34,7 +36,7 @@ mkinitcpio -P
 echo enter a root password
 passwd
 
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=archGrub --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=majaroGrub --recheck
 rm /etc/default/grub
 cp grub /etc/default/
 grub-mkconfig -o /boot/grub/grub.cfg

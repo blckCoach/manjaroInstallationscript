@@ -1,15 +1,10 @@
 #!/bin/bash
 
+sudo su
 loadkeys de
-echo ----------------------------------------
-echo if you want to connect wifi 
-echo device list
-echo station DEVICE scan
-echo station DEVICE get-networks
-echo station DEVICE connect SSID
-echo exit
-echo ----------------------------------------
-iwctl 
+pacman-mirrors --geoip
+pacman -Syy archlinux-keyring manjaro-keyring
+pacman -Syyu
 
 echo ----------------------------------------
 echo 300M - efi, 300M - kernel, rest - SYSTEM
@@ -28,7 +23,7 @@ read kernelPartition
 echo enter wich partition you wanna use as system-Partition: /dev/sda3
 read systemPartition
 
-mkfs.msdos -F 32 $efiPartition
+mkfs.fat -F 32 $efiPartition
 mkfs.ext4 $kernelPartition
 
 cryptsetup -v -y --cipher aes-xts-plain64 --key-size 256 --hash sha256 --iter-time 2000 --use-urandom --verify-passphrase luksFormat $systemPartition
@@ -42,6 +37,6 @@ mount $kernelPartition /mnt/boot
 mkdir /mnt/boot/efi
 mount $efiPartition /mnt/boot/efi
 
-basestrap /mnt base base-devel linux linux-firmware vim dhcpcd wpa_supplicant netctl dialog grub efibootmgr dosfstools gptfdisk bash-completion git mkinitcpio
-genfstab -U /mnt >> /mnt/etc/fstab
+basestrap /mnt base base-devel linux56 vim dhcpcd wpa_supplicant netctl dialog grub efibootmgr dosfstools gptfdisk bash-completion git mkinitcpio
+fstabgen -U /mnt >> /mnt/etc/fstab
 manjaro-chroot /mnt 
