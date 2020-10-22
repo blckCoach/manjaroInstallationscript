@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo su
 loadkeys de
 pacman-mirrors --geoip
 pacman -Syy archlinux-keyring manjaro-keyring
