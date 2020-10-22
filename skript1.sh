@@ -36,6 +36,6 @@ mount $kernelPartition /mnt/boot
 mkdir /mnt/boot/efi
 mount $efiPartition /mnt/boot/efi
 
-basestrap /mnt base base-devel linux56 vim dhcpcd wpa_supplicant netctl dialog grub efibootmgr dosfstools gptfdisk bash-completion git mkinitcpio
+basestrap /mnt base base-devel linux vim dhcpcd wpa_supplicant netctl dialog grub efibootmgr dosfstools gptfdisk bash-completion git mkinitcpio
 fstabgen -U /mnt >> /mnt/etc/fstab
 manjaro-chroot /mnt 
