@@ -26,11 +26,11 @@ locale-gen
 
 echo "LANG=de_DE.utf8" > /etc/locale.conf
 
-echo "majaro" >vim /etc/hostname
+echo "majaro" > /etc/hostname
 
 mkinitcpio -P linux56
 rm /etc/mkinitcpio.conf
-cp mkinitcpio.conf /etc/
+cp /opt/manjaroInstallationscript/mkinitcpio.conf /etc/
 mkinitcpio -P
 
 echo enter a root password
@@ -38,7 +38,7 @@ passwd
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=majaroGrub --recheck
 rm /etc/default/grub
-cp grub /etc/default/
+cp /opt/manjaroInstallationscript/grub /etc/default/
 grub-mkconfig -o /boot/grub/grub.cfg
 
 exit
